@@ -137,8 +137,8 @@ public class TooltipOverlayHandler {
     }
 
     private static boolean shouldShowTooltip(ItemStack hoveredStack) {
-        boolean shouldShowTooltip = (ModConfig.SHOW_FOOD_VALUES_IN_TOOLTIP.getDefaultBoolean() && KeyHelper.isShiftKeyDown())
-                || ModConfig.ALWAYS_SHOW_FOOD_VALUES_TOOLTIP.getDefaultBoolean();
+        boolean shouldShowTooltip = (ModConfig.SHOW_FOOD_VALUES_IN_TOOLTIP.get() && KeyHelper.isShiftKeyDown())
+                || ModConfig.ALWAYS_SHOW_FOOD_VALUES_TOOLTIP.get();
 
         if (null == hoveredStack) {
             return shouldShowTooltip;

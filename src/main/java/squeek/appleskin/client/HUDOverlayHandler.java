@@ -84,7 +84,7 @@ public class HUDOverlayHandler {
     public static void renderExhaustion(GuiIngameForge gui, float partialTicks, int screenWidth, int screenHeight) {
         foodIconsOffset = GuiIngameForge.right_height;
 
-        if (!ModConfig.SHOW_FOOD_EXHAUSTION_UNDERLAY.getDefaultBoolean())
+        if (!ModConfig.SHOW_FOOD_EXHAUSTION_UNDERLAY.get())
             return;
 
         Minecraft mc = Minecraft.getMinecraft();
@@ -131,7 +131,7 @@ public class HUDOverlayHandler {
             saturationRenderEvent = new HUDOverlayEvent.Saturation(stats.getSaturationLevel(), right, top, gui);
 
             // cancel render overlay event when configuration disabled.
-            if (!ModConfig.SHOW_SATURATION_OVERLAY.getDefaultBoolean())
+            if (!ModConfig.SHOW_SATURATION_OVERLAY.get())
                 saturationRenderEvent.setCanceled(true);
 
             // notify everyone that we should render saturation hud overlay
@@ -188,7 +188,7 @@ public class HUDOverlayHandler {
             if (healthRenderEvent != null && !healthRenderEvent.isCanceled())
                 drawHealthOverlay(healthRenderEvent, mc, flashAlpha);
         } else if (type == RenderOverlayType.FOOD) {
-            if (!ModConfig.SHOW_FOOD_VALUES_OVERLAY.getDefaultBoolean())
+            if (!ModConfig.SHOW_FOOD_VALUES_OVERLAY.get())
                 return;
 
             // notify everyone that we should render hunger hud overlay
@@ -389,7 +389,7 @@ public class HUDOverlayHandler {
         } else if (unclampedFlashAlpha <= -0.5f) {
             alphaDir = 1;
         }
-        flashAlpha = Math.max(0F, Math.min(1F, unclampedFlashAlpha)) * Math.max(0F, Math.min(1F, (float) ModConfig.MAX_HUD_OVERLAY_FLASH_ALPHA.getDefaultDouble()));
+        flashAlpha = Math.max(0F, Math.min(1F, unclampedFlashAlpha)) * Math.max(0F, Math.min(1F, ModConfig.MAX_HUD_OVERLAY_FLASH_ALPHA.get().floatValue()));
     }
 
     public static void resetFlash() {
@@ -416,14 +416,14 @@ public class HUDOverlayHandler {
     }
 
     private static boolean shouldRenderAnyOverlays() {
-        return ModConfig.SHOW_FOOD_VALUES_OVERLAY.getDefaultBoolean()
-                || ModConfig.SHOW_SATURATION_OVERLAY.getDefaultBoolean()
-                || ModConfig.SHOW_FOOD_HEALTH_HUD_OVERLAY.getDefaultBoolean();
+        return ModConfig.SHOW_FOOD_VALUES_OVERLAY.get()
+                || ModConfig.SHOW_SATURATION_OVERLAY.get()
+                || ModConfig.SHOW_FOOD_HEALTH_HUD_OVERLAY.get();
     }
 
     private static boolean shouldShowEstimatedHealth() {
         // then configuration cancel the render event
-        if (!ModConfig.SHOW_FOOD_HEALTH_HUD_OVERLAY.getDefaultBoolean())
+        if (!ModConfig.SHOW_FOOD_HEALTH_HUD_OVERLAY.get())
             return false;
 
         Minecraft mc = Minecraft.getMinecraft();
@@ -471,7 +471,7 @@ public class HUDOverlayHandler {
         boolean shouldAnimatedHealth = false;
 
         // when some mods using custom render, we need to least provide an option to cancel animation
-        if (ModConfig.SHOW_VANILLA_ANIMATION_OVERLAY.getDefaultBoolean()) {
+        if (ModConfig.SHOW_VANILLA_ANIMATION_OVERLAY.get()) {
             // in vanilla health is too low (below 5) will show heartbeat animation
             // when regeneration will also show heartbeat animation, but we don't need now
             shouldAnimatedHealth = Math.ceil(player.getHealth()) <= 4;
@@ -508,7 +508,7 @@ public class HUDOverlayHandler {
         boolean shouldAnimatedFood = false;
 
         // when some mods using custom render, we need to least provide an option to cancel animation
-        if (ModConfig.SHOW_VANILLA_ANIMATION_OVERLAY.getDefaultBoolean()) {
+        if (ModConfig.SHOW_VANILLA_ANIMATION_OVERLAY.get()) {
             FoodStats stats = player.getFoodStats();
 
             // in vanilla saturation level is zero will show hunger animation

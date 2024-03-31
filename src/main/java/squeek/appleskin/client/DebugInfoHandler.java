@@ -25,7 +25,7 @@ public class DebugInfoHandler {
     @SuppressWarnings("unused")
     @SubscribeEvent
     public void onTextRender(RenderGameOverlayEvent.Text textEvent) {
-        if (!ModConfig.SHOW_FOOD_DEBUG_INFO.getDefaultBoolean())
+        if (!ModConfig.SHOW_FOOD_DEBUG_INFO.get())
             return;
 
         Minecraft mc = Minecraft.getMinecraft();
